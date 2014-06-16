@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block head_title %}Активация{% endblock %}
+
+{% block header_title %}Активация{% endblock %}
+
+{% block base_content %}
+<p>&nbsp;</p>
+<div class="col-md-8 col-md-offset-2 panel panel-default">
+	<div class="panel-body">
+	<h1>Активация</h1>
+	<p>Здравствуйте{% if account %}, {{ account }}{% endif %}!<br/>
+Ваша учетная запись активирована. <a href="{% url "auth_login" %}">Теперь вы можете войти</a> на сайт.</p>
+	</div>
+</div>
+{% endblock %}

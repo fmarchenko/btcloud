@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load staticfiles i18n btsync_tags %}
+
+{% block head_title %}BitTorrent Cloud: {{ user.username }} secure storage cloud{% endblock %}
+
+{% block header_title %}BitTorrent Cloud{% endblock %}
+
+{% block header_slogan %}<ol class="breadcrumb">
+	{% if paths %}
+  		<li><a href="{% url 'cloud_view' %}">{{ user.username }}</a></li>
+  	{% else %}
+  		<li class="active">{{ user.username }}</li>
+  	{% endif %}
+ 	{% for path in paths %}
+		{% if forloop.last %}
+			<li class="active">{{ path.0 }}</li>
+  		{% else %}
+  			<li><a href="{% url 'cloud_with_path_view' path.1 %}">{{ path.0 }}</a></li>
+	  	{% endif %}
+  	{% endfor %}
+</ol>
+{% endblock %}
+
+{% block base_content %}
+<div class="col-md-12">
+{{ block.super }}
+{% if dirs or files %}
+	<table>
+		<thead>
+			<tr>
+				<th>{% trans "Name" %}</th>
+				<th>{% trans "Size" %}</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% if paths %}
+                {% with paths|slice:"-2:-1" as up_dir %}
+                    <tr><td><a href="{% if up_dir %}{% url 'cloud_with_path_view' up_dir.0.1 %}{% else %}{% url 'cloud_view' %}{% endif %}">..</a></td><td>&lt;up&gt;</td></tr>
+                {% endwith %}
+            {% endif %}
+			{% for dir in dirs %}
+			<tr>
+				<td>
+                    <a href="{{ dir.name|fix_decode }}">
+                        <b class="glyphicon glyphicon-folder-close"></b>&nbsp;{{ dir.name|fix_decode }}</td>
+                    </a>
+				<td>&lt;dir&gt;</td>
+			</tr>
+			{% endfor %}
+			{% for file in files %}
+			<tr>
+				<td>
+                    <a href="#{{ file.name|fix_decode }}">
+                        <b class="glyphicon glyphicon-file"></b>&nbsp;{{ file.name|fix_decode }}</td>
+                    </a>
+				<td>{{ file.size }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% else %}
+	<p>{% trans "Folder is empty" %}</p>
+{% endif %}
+</div>
+{% endblock %}

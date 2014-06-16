@@ -1,0 +1,4 @@
+Регистрация на сайте {{ site }}.
+Для активации вашего аккаунта необходимо перейти по ссылке:
+<a href="http://{{ site }}/accounts/activate/{{ activation_key }}/">{{ site }}/accounts/activate/{{ activation_key }}/</a>
+Спасибо!

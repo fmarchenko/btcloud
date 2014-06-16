@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block head_title %}Регистрация{% endblock %}
+
+{% block header_title %}Регистрация{% endblock %}
+
+{% block base_content %}<p>&nbsp;</p>
+<div class="col-md-8 col-md-offset-2 panel panel-default">
+	<div class="panel-body">
+		<h1>Регистрация</h1>
+		<form method="post" action="" role="form">{% csrf_token %}
+		{% for field in form %}
+			<div class="form-group">
+				{{ field.label_tag }}
+				{{ field|add_class:"form-control" }}
+			</div>
+		    {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+		    {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+		{% endfor %}
+		<button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+		</form>
+	</div>
+</div>
+{% endblock %}

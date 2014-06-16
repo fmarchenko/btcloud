@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block head_title %}Авторизация{% endblock %}
+
+{% block header_title %}Авторизация{% endblock %}
+
+{% block base_content %}<p>&nbsp;</p>
+<div class="col-md-8 col-md-offset-2 panel panel-default">
+	<div class="panel-body">
+	<h1>Авторизация</h1>
+
+{% if user.is_authenticated %}
+<p>Что такое, {{ user.username }}? Вы же уже авторизорваны. 
+Впрочем, всегда можно <a href="{% url "auth_logout" %}">выйти</a>.</p>
+{% else %}
+
+{% if form.non_field_errors %}
+{{ form.non_field_errors }}
+{% endif %}
+
+<form method="post" action="">{% csrf_token %}
+{% for field in form %}
+	<div class="form-group">
+		{{ field.label_tag }}
+		{{ field|add_class:"form-control" }}
+	</div>
+    {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+    {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+{% endfor %}
+<input type="submit" class="btn btn-primary" value="Вход" class="clearfix">
+</form>
+    
+<script type="text/javascript">
+document.getElementById('id_username').focus()
+</script>
+<br/>
+<ul>
+    <li><a href="{% url "auth_password_reset" %}">Забыли пароль?</a></li>
+    <li><a href="{% url "registration_register" %}">Регистрация</a></li>
+</ul>   
+{% endif %}
+	</div>
+</div>
+{% endblock %}

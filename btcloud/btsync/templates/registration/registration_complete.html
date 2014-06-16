@@ -1,0 +1,25 @@
+{% extends "base.html"  %}
+
+{% block head_title %}Регистрация завершена{% endblock %}
+
+{% block header_title %}Регистрация завершена{% endblock %}
+
+{% block base_content %}
+<p>&nbsp;</p>
+<div class="col-md-8 col-md-offset-2 panel panel-default">
+	<div class="panel-body">
+	<h1>Регистрация завершена</h1>
+	<p>Спасибо за уделённое время. На ваш e-mail отправлен 
+код подтверждения. Необходимо подтвердить регистрацию, 
+просто кликнув по указанной ссылке.</p> 
+	<p class="alert alert-info"><b>Через <span id="id_time_to">5</span> сек. будет осуществлен переход на <a href="/">главную страницу</a>.</b> Если он не происходит автоматически, нажмите <a href="/">сюда</a>.</p>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function goToIndex(){ location.href = '/'; }
+	function decTimeTo(){ document.getElementById('id_time_to').innerHTML = parseInt(document.getElementById('id_time_to').innerHTML) - 1; }
+	setTimeout(goToIndex, 5000);
+	setInterval(decTimeTo, 1000);
+</script>
+{% endblock %}
